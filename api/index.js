@@ -7,6 +7,10 @@ app.use(express.json());
 let items = [];
 
 // Routes ...
+app.get("/", ((req, res) => {
+	const data = "This is base {/index} API. Use the respective routing-API to begin.";
+	return res.status(200).send(data);
+}));
 app.get("/api/items", (req, res) => {
   res.json({ items });
 });
