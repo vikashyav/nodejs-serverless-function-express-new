@@ -32,5 +32,11 @@ app.delete("/api/items/:id", (req, res) => {
   res.json({ message: "Item deleted" });
 });
 
+const port = 3002;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+				console.log("HVAC API listening on " + `[ http://localhost:${port}/api/v1/ ]`);
+    });
+
 // Export handler for Vercel
 export default serverless(app);
