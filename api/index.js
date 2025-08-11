@@ -6,7 +6,7 @@ app.use(express.json());
 
 let items = [];
 
-// Routes
+// Routes ...
 app.get("/api/items", (req, res) => {
   res.json({ items });
 });
