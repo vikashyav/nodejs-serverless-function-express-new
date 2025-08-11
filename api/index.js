@@ -1,42 +1,25 @@
 import express from "express";
-import serverless from "serverless-http";
 
+// Create the express app
 const app = express();
-app.use(express.json());
 
-let items = [];
+app.get("/", (req, res) => {
+  res.status(200).send("This is base {/index} API. Use the respective routing-API to begin.");
+});
 
-// Routes ...11
-app.get("/", ((req, res) => {
-	const data = "This is base {/index} API. Use the respective routing-API to begin.";
-	return res.status(200).send(data);
-}));
+app.get("/test", (req, res) => {
+  res.status(200).send("This is base {/test} API. Use the respective routing-API to begin.");
+});
+
+let items = [{
+  message:"testing"
+}];
+
+// Routes
 app.get("/api/items", (req, res) => {
   res.json({ items });
 });
-
-app.post("/api/items", (req, res) => {
-  const item = req.body;
-  items.push(item);
-  res.status(201).json({ message: "Item added", item });
-});
-
-app.get("/api/items/:id", (req, res) => {
-  const item = items[parseInt(req.params.id)];
-  if (!item) return res.status(404).json({ message: "Item not found" });
-  res.json(item);
-});
-
-app.delete("/api/items/:id", (req, res) => {
-  items = items.filter((_, i) => i !== parseInt(req.params.id));
-  res.json({ message: "Item deleted" });
-});
-
-const port = 3002;
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-				console.log("HVAC API listening on " + `[ http://localhost:${port}/api/v1/ ]`);
-    });
-
-// Export handler for Vercel
-export default serverless(app);
+// ✅ Export the express instance as a function for Vercel
+export default (req, res) => {
+  return app(req, res);
+};
